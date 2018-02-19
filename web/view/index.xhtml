@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <link rel="stylesheet" href="style.css"/>
+   <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+   <title>Лабораторная работа 3</title>
+</h:head>
+<h:body>
+   <table>
+      <tr id="header">
+         <td>
+            <div>Павлова Е.В.,Сивкова Ю.А.<br/>
+               <h1>группа P3219, вариант 905</h1></div>
+            <div>
+               <f:view>
+                  <h:form prependId="false">
+                     <p:clock id="clockID" syncInterval="7000"> </p:clock>
+                  </h:form>
+               </f:view>
+            </div>
+            <div>
+               <h:link value="Перейти на основную страницу" outcome="main"/>
+            </div>
+         </td>
+      </tr>
+   </table>
+</h:body>
+</html>

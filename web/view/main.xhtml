@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Facelet Title</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script type="text/javascript" src="graph.js"/>
+</h:head>
+
+<h:body>
+    <h:form id="canvaForm" class="main">
+        <h:inputHidden id="canvaX" value="#{controllerMB.currX}" />
+        <h:inputHidden id="canvaY" value="#{controllerMB.currY}" />
+        <h:inputHidden id="canvaR" value="#{controllerMB.currR}" />
+
+        <canvas id="example" width="300" height="300">
+            Canvas not supported
+        </canvas>
+        <p:remoteCommand name="canvaReady" action="#{controllerMB.addItem()}" update=":resultss" />
+    </h:form>
+
+    <h:form id="mainform" class="main">
+
+        <br/>
+        <h:outputText value = "Введите координаты точки и радиус области"/> <br/>
+        <h:outputText value = "Введите Х "/>
+        <h:selectOneMenu id="xcoord" value="#{controllerMB.currX}">
+            <f:selectItem itemValue = "-4" itemLabel = "-4" />
+            <f:selectItem itemValue = "-3" itemLabel = "-3" />
+            <f:selectItem itemValue = "-2" itemLabel = "-2" />
+            <f:selectItem itemValue = "-1" itemLabel = "-1" />
+            <f:selectItem itemValue = "0" itemLabel = "0" />
+            <f:selectItem itemValue = "1" itemLabel = "1" />
+            <f:selectItem itemValue = "2" itemLabel = "2" />
+            <f:selectItem itemValue = "3" itemLabel = "3" />
+            <f:selectItem itemValue = "4" itemLabel = "4" />
+        </h:selectOneMenu> <br/>
+        <h:outputText value = "Введите У "/>
+        <h:inputText id="ycoord" required="true" value="#{controllerMB.currY}">
+            <f:validator validatorId="validator" />
+        </h:inputText>
+        <h:message for="ycoord" style="color:red" /> <br/>
+        <h:outputText value = "Введите радиус "/> <h:message for="r" style="color:red"/>
+        <h:selectOneRadio onchange="drawField(this.value)" type="radio" required="true" id="r" value="#{controllerMB.currR}">
+            <f:selectItem id="r1" type="radio" name="radius" itemValue = "1" itemLabel = "1" />
+            <f:selectItem id="r2" type="radio" name="radius" itemValue = "1.5" itemLabel = "1.5" />
+            <f:selectItem id="r3" type="radio" name="radius" itemValue = "2" itemLabel = "2"  />
+            <f:selectItem id="r4" type="radio" name="radius" itemValue = "2.5" itemLabel = "2.5" />
+            <f:selectItem id="r5" type="radio" name="radius" itemValue = "3" itemLabel = "3" />
+        </h:selectOneRadio>
+        <h:commandButton onclick="drawPoints()" class="submit_btn" value="Проверить" id="submit">
+            <f:ajax execute="mainform:xcoord mainform:ycoord mainform:r" render=":resultss" listener="#{controllerMB.addItem()}"/>
+        </h:commandButton>
+    </h:form>
+
+    <h:dataTable value="#{controllerMB.getResults()}" var="c"
+                 styleClass="order-table"
+                 headerClass="order-table-header"
+                 rowClasses="order-table-odd-row,order-table-even-row"
+                 id="resultss" border="1" class="main">
+        <h:column>
+            <f:facet name="header">
+                X
+            </f:facet>
+            ${c.xcoord}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                Y
+            </f:facet>
+            ${c.ycoord}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                R
+            </f:facet>
+            ${c.radius}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                Результат попадания
+            </f:facet>
+            ${c.msg}
+        </h:column>
+
+    </h:dataTable>
+
+    <br/><h:link value="Вернуться на стартовую страницу" outcome="index"/>
+</h:body>
+</html>
